@@ -3,6 +3,8 @@ import { IsometricContainer, Isometric, IsometricPlane, IsometricGrid,IsometricC
 import "nes.css/css/nes.min.css";
 import axios from "axios";
 import ConversionRates from "./components/ConversionRates.jsx";
+import LeftDisplay from './components/LeftDisplay.jsx';
+import RightDisplay from './components/RightDisplay.jsx';
 
 
 function App() {
@@ -48,23 +50,7 @@ function App() {
        <div style={{backgroundColor: "#252324"}}></div>
        <div style={{backgroundColor: "#252324"}}></div>
        <div>
-           <section className="nes-container flipThis  glowScreen">
-               <section className="message-list">
-                   <section className="message -right">
-                       <i className="nes-bcrikko"></i>
-                       <div className="nes-balloon from-left">
-                           <p>Hello NES.css</p>
-                       </div>
-                   </section>
-
-                   <section className="message -right">
-                       <div className="nes-balloon from-right">
-                           <p>Good morning. Thou hast had a good night's sleep, I hope.</p>
-                       </div>
-                       <i className="nes-bcrikko"></i>
-                   </section>
-               </section>
-           </section>
+          <RightDisplay coinData = {currentCoinData}/>
        </div>
        <div style={{backgroundColor: "#252324"}}></div>
 </IsometricCube>
@@ -79,23 +65,7 @@ function App() {
     <div style={{backgroundColor: "#252324"}}></div>
     <div style={{backgroundColor: "#252324"}}></div>
     <div>
-        <section className="nes-container flipThis  glowScreen">
-            <section className="message-list">
-                <section className="message -right">
-                    <i className="nes-bcrikko"></i>
-                    <div className="nes-balloon from-left">
-                        <p>Hello NES.css</p>
-                    </div>
-                </section>
-
-                <section className="message -right">
-                    <div className="nes-balloon from-right">
-                        <p>Good morning. Thou hast had a good night's sleep, I hope.</p>
-                    </div>
-                    <i className="nes-bcrikko"></i>
-                </section>
-            </section>
-        </section>
+       <LeftDisplay/>
     </div>
     <div style={{backgroundColor: "#252324"}}></div>
 
