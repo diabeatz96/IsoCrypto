@@ -4,3 +4,31 @@ html, body, pre, code, kbd, samp {
   height: 100%;
   background-color: #284646;
 }
+
+.flipThis {
+  transform: scaleX(-1);
+}
+
+.glassFilter {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.glowScreen {
+  animation: glow 2s infinite alternate;
+
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0px 100px -10px #FFFFFF;
+  }
+  to {
+    box-shadow: 0 0 100px 10px #FFFFFF;
+  }
+}
