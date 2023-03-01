@@ -10,6 +10,7 @@ import RightDisplay from './components/RightDisplay.jsx';
 function App() {
   const [currentCoinData, setCurrentCoinData] = useState(null)
 
+
     useEffect(() => {
         return () => {
             const coinData = async () => {
@@ -27,14 +28,6 @@ function App() {
     }, [currentCoinData]);
 
 
-    const coinData = async () => {
-      try {
-          const response = await axios.get("https://api.coindesk.com/v1/bpi/currentprice.json")
-          setCurrentCoinData(response.data);
-      } catch(e) {
-          return e.error;
-      }
-    }
 
   return (
       <div>
@@ -67,7 +60,7 @@ function App() {
     <div style={{backgroundColor: "#252324"}}></div>
     <div style={{backgroundColor: "#252324"}}></div>
     <div>
-       <LeftDisplay/>
+       <LeftDisplay coinData={currentCoinData}/>
     </div>
     <div style={{backgroundColor: "#252324"}}></div>
 

@@ -1,14 +1,90 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-function ConversionRates(props) {
+function ConversionRates({dataInfo}) {
+
+    const [USD, setUSD] = useState(1);
+    const [GBP, setGBP] = useState(1);
+    const [EUR, setEUR] = useState(1);
+    const [rateGroup, setRateGroup] = useState([BTCUSD, BTCGBP, BTCEUR]);
+    const [BTCUSD, setBTCUSD] = useState();
+    const [BTCGBP, setBTCGBP] = useState();
+    const [BTCEUR, setBTCEUR] = useState();
+
+
+    useEffect(() => {
+        if(dataInfo === null || dataInfo === undefined) {
+            console.log(dataInfo)
+        } else {
+            console.log(dataInfo)
+            const usdRate = dataInfo.bpi.USD.rate_float;
+            const gbpRate = dataInfo.bpi.GBP.rate_float;
+            const eurRate = dataInfo.bpi.EUR.rate_float;
+            setBTCUSD((USD / usdRate).toFixed(4));
+            setBTCGBP((GBP / gbpRate).toFixed(4));
+            setBTCEUR((EUR / eurRate).toFixed(4));
+        }
+    }, [dataInfo])
+
+
+    const setCoinHandler = (e, cointype) => {
+
+        const usdRate = dataInfo.bpi.USD.rate_float;
+        const gbpRate = dataInfo.bpi.GBP.rate_float;
+        const eurRate = dataInfo.bpi.EUR.rate_float;
+        switch(cointype) {
+            case "USD":
+                setUSD(parseFloat(e.target.value));
+                setBTCUSD((USD / usdRate).toFixed(4));
+                break;
+            case "EUR":
+                setEUR(parseFloat(e.target.value));
+                setBTCEUR((EUR / eurRate).toFixed(4));
+                break;
+            case "GBP":
+                setGBP(parseFloat(e.target.value));
+                setBTCGBP((GBP / gbpRate).toFixed(4));
+                break;
+            default:
+                e.target.value = "Does not exist"
+        }
+    }
+
     return (
         <div>
-            <div className="nes-container is-dark is-centered">
+            <div className="nes-container  is-centered">
                 <p className="title">Conversion Rates</p>
                 <button type="button" className="nes-btn is-primary">Sort Rates</button>
-                <button type="button" className="nes-btn is-success">Success</button>
-                <button type="button" className="nes-btn is-warning">Warning</button>
-                <button type="button" className="nes-btn is-error">Error</button>
+                <button type="button" className="nes-btn is-success">Refresh Rates</button>
+                <button type="button" className="nes-btn is-warning">Coin Desk</button>
+                <button type="button" className="nes-btn is-error">Info</button>
+
+                <div className="nes-field is-inline">
+                    <label htmlFor="USD"> USD </label>
+                    <input defaultValue={1000} type="number" min="1" maxLength={10} onChange={(e) => setCoinHandler(e, "USD")} id="warning_field" className="nes-input is-warning" placeholder={100}/>
+                    <span className="is-warning"><i className="nes-icon coin is-small"></i></span>
+                    <span className="is-primary"> {BTCUSD}</span>
+                </div>
+
+                <div className="nes-field is-inline">
+                    <label htmlFor="EUR"> EUR </label>
+                    <input defaultValue={1000} type="number" min="1" maxLength={10}
+                           onChange={(e) => setCoinHandler(e, "EUR")} id="EUR"
+                           className="nes-input is-warning" placeholder="100"/>
+                    <span className="is-warning"><i className="nes-icon coin is-small"></i></span>
+                    <span className="is-primary"> {BTCEUR}</span>
+                </div>
+
+                <div className="nes-field is-inline">
+                    <label htmlFor="GBP"> GBP </label>
+                    <input defaultValue={1000} type="number" min="1" maxLength={10}
+                           onChange={(e) => setCoinHandler(e, "GBP")} id="GBP"
+                           className="nes-input is-warning" placeholder="100"/>
+                    <span className="is-warning"><i className="nes-icon coin is-small"></i></span>
+                    <span className="is-primary"> {BTCGBP}</span>
+                </div>
+
+
+
             </div>
         </div>
     );

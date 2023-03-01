@@ -1,25 +1,49 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import ConversionRates from "./ConversionRates.jsx";
 
 function LeftDisplay({coinData}) {
+
+    const[currentTime, setCurrentTime] = useState("");
+
+
+    useEffect(() => {
+        return () => {
+            if(!coinData) {
+                console.log(coinData);
+            } else {
+                console.log(coinData);
+
+                const utcTime = coinData.time.updated;
+                const date = new Date(utcTime);
+                setCurrentTime(date.toLocaleString());
+            }
+        };
+    }, [coinData]);
+
     return (
         <div>
-            <section className="nes-container flipThis  glowScreen">
-               <section className="message-list">
-                   <section className="message -right">
-                       <i className="nes-bcrikko"></i>
-                       <div className="nes-balloon from-left">
-                           <p>Hello Im Adam</p>
-                       </div>
-                   </section>
+            <section className="flipThis glowScreen nes-container is-large is-centered">
+                <div style={{fontSize: "2rem"}} className="nes-text is-primary"> CRYPTO EXCHANGE </div>
 
-                   <section className="message -right">
-                       <div className="nes-balloon from-right">
-                           <p>Good morning. Thou hast had a good night's sleep, I hope.</p>
-                       </div>
-                       <i className="nes-bcrikko"></i>
-                   </section>
-               </section>
-           </section>
+                <i className="nes-icon coin is-large"></i>
+                <i className="nes-icon coin is-large"></i>
+                <i className="nes-icon coin is-large"></i>
+                <i className="nes-icon coin is-large"></i>
+                <i className="nes-icon coin is-large"></i>
+
+                <div> </div>
+
+                <section>
+                    <i className="nes-squirtle"></i>
+                    <i className="nes-bulbasaur"></i>
+                    <i className="nes-charmander"></i>
+                </section>
+                <h1 style={{textAlign: "center", }} className= "nes-text is-error"> {currentTime} </h1>
+                <i className ="nes-icon instagram is-large">  </i>
+                <i className ="nes-icon github is-large">  </i>
+                <i className="nes-icon linkedin is-large">  </i>
+
+            </section>
 
         </div>
     );
