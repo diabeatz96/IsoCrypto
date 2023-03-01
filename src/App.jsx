@@ -13,6 +13,7 @@ function App() {
     useEffect(() => {
         return () => {
             const coinData = async () => {
+              if(currentCoinData === null) {
                 try {
                     const response = await axios.get("https://api.coindesk.com/v1/bpi/currentprice.json")
                     setCurrentCoinData(response.data);
@@ -20,9 +21,10 @@ function App() {
                     return e.error;
                 }
             }
+          }
             coinData();
         };
-    }, []);
+    }, [currentCoinData]);
 
 
     const coinData = async () => {
@@ -50,7 +52,7 @@ function App() {
        <div style={{backgroundColor: "#252324"}}></div>
        <div style={{backgroundColor: "#252324"}}></div>
        <div>
-          <RightDisplay coinData = {currentCoinData}/>
+          <RightDisplay dataInfo = {currentCoinData}/>
        </div>
        <div style={{backgroundColor: "#252324"}}></div>
 </IsometricCube>
