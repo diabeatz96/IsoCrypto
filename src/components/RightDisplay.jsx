@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import ConversionRates from "./ConversionRates.jsx";
 
-function RightDisplay({dataInfo}) {
+function RightDisplay({ dataInfo }) {
+  const [passInfo, setpassInfo] = useState(null);
 
-    const [passInfo, setpassInfo] = useState(null)
-
-    useEffect(() => {
-        if(dataInfo === null) {
-            console.log(dataInfo)
-        } else {
-            console.log(dataInfo)
-            setpassInfo(dataInfo);
-        }
-    }, [dataInfo])
-    return (
-        <div>
-        <section className="nes-container is-centered flipThis glowScreen">
-            <section>
-
-                <ConversionRates dataInfo={passInfo}/>
-
-            </section>
+  useEffect(() => {
+    if (dataInfo === null) {
+      console.log(dataInfo);
+    } else {
+      console.log(dataInfo);
+      setpassInfo(dataInfo);
+    }
+  }, [dataInfo]);
+  return (
+    <div>
+      <section className="nes-container is-centered flipThis glowScreen">
+        <section>
+          <ConversionRates dataInfo={passInfo} />
         </section>
-        </div>
-    );
+      </section>
+    </div>
+  );
 }
 
 export default RightDisplay;
