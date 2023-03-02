@@ -21,7 +21,6 @@ function ConversionRates({ dataInfo }) {
   const [dollarBTCEUR, setDollarBTCEUR] = useState(1);
   const [dollarBTCGBP, setDollarBTCGBP] = useState(1);
   const [timeLeft, setTimeLeft] = useState(300);
-
   const [rateGroup, setRateGroup] = useState([
     {
       element: (
@@ -54,6 +53,13 @@ function ConversionRates({ dataInfo }) {
       btcValue: dollarBTCGBP,
     },
   ]);
+  const [selectedItem, setSelectedItem] = useState(
+    <CurrencySelection
+      currencyName={"USD"}
+      coinHandler={(e) => setCoinHandler(e, "USD")}
+      btcType={BTCUSD}
+    />
+  );
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -73,9 +79,9 @@ function ConversionRates({ dataInfo }) {
 
       if (expirationTime === "0") {
         clearInterval(intervalId);
+        localStorage.removeItem(expirationTime);
         return;
       }
-
       setTimeLeft(parseInt(expirationTime) - 1);
       localStorage.setItem("expirationTime", parseInt(expirationTime) - 1);
     }, 1000);
@@ -91,8 +97,6 @@ function ConversionRates({ dataInfo }) {
         The BTC exchange rates and their USD equivalents are then stored in the component state using the `setBTCUSD`, `setBTCGBP`, `setBTCEUR`, `setDollarBTCUSD`, `setDollarBTCEUR`, and `setDollarBTCGBP` functions.
     */
   }
-
-  useEffect(() => {});
 
   useEffect(() => {
     if (dataInfo === null || dataInfo === undefined) {
@@ -112,6 +116,7 @@ function ConversionRates({ dataInfo }) {
         localStorage.setItem("GBP", gbpRate);
         localStorage.setItem("EUR", eurRate);
       }
+      console.log("TRIGGERED");
       const usdRate = localStorage.getItem("GBP");
       const gbpRate = localStorage.getItem("EUR");
       const eurRate = localStorage.getItem("GBP");
@@ -124,17 +129,18 @@ function ConversionRates({ dataInfo }) {
     }
   }, [dataInfo]);
 
-  const selectHandler = (e) => {
-    return <div> HIIII </div>;
-  };
   const setCoinHandler = (e, cointype) => {
     const usdRate = dataInfo.bpi.USD.rate_float;
     const gbpRate = dataInfo.bpi.GBP.rate_float;
     const eurRate = dataInfo.bpi.EUR.rate_float;
+    console.log("Value at coin Handler" + e.target.value);
     switch (cointype) {
       case "USD":
+        debugger;
         setUSD(parseFloat(e.target.value));
+        console.log(parseFloat(e.target.value));
         setBTCUSD((USD / usdRate).toFixed(4));
+        console.log(BTCUSD);
         break;
       case "EUR":
         setEUR(parseFloat(e.target.value));
@@ -146,6 +152,40 @@ function ConversionRates({ dataInfo }) {
         break;
       default:
         e.target.value = "Does not exist";
+    }
+  };
+  const selectHandler = (e) => {
+    console.log(e.target.value);
+    switch (e.target.value) {
+      case "USD":
+        setSelectedItem(
+          <CurrencySelection
+            currencyName={"USD"}
+            coinHandler={(e) => setCoinHandler(e, "USD")}
+            btcType={BTCUSD}
+          />
+        );
+        break;
+      case "EUR":
+        setSelectedItem(
+          <CurrencySelection
+            currencyName={"EUR"}
+            coinHandler={(e) => setCoinHandler(e, "EUR")}
+            btcType={BTCEUR}
+          />
+        );
+        break;
+      case "GBP":
+        setSelectedItem(
+          <CurrencySelection
+            currencyName={"GBP"}
+            coinHandler={(e) => setCoinHandler(e, "GBP")}
+            btcType={BTCGBP}
+          />
+        );
+        break;
+      default:
+        break;
     }
   };
 
@@ -172,31 +212,20 @@ function ConversionRates({ dataInfo }) {
           Info
         </button>
 
-        <select
-          onSelect={(e) => {
-            selectHandler;
-          }}
-        >
-          <option value="0">Option 1</option>
-          <option value="1">Option 2</option>
-          <option value="2">Option 3</option>
-        </select>
+        <div>
+          <label htmlFor="options">Select an option:</label>
+          <select
+            onChange={(e) => {
+              selectHandler(e);
+            }}
+          >
+            <option value="USD"> USA </option>
+            <option value="EUR"> EUR </option>
+            <option value="GBP"> GBP </option>
+          </select>
 
-        <CurrencySelection
-          currencyName={"USD"}
-          coinHandler={(e) => setCoinHandler(e, "USD")}
-          btcType={BTCUSD}
-        />
-        <CurrencySelection
-          currencyName={"EUR"}
-          coinHandler={(e) => setCoinHandler(e, "EUR")}
-          btcType={BTCEUR}
-        />
-        <CurrencySelection
-          currencyName={"GBP"}
-          coinHandler={(e) => setCoinHandler(e, "GBP")}
-          btcType={BTCGBP}
-        />
+          {selectedItem}
+        </div>
       </div>
     </div>
   );

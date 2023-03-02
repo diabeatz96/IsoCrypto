@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 function CurrencySelection({ currencyName, coinHandler, btcType }) {
+
+    const handleCoinChange = (event) => {
+        coinHandler(event.target.value, currencyName);
+      };
+
   return (
     <div>
       <div className="nes-field is-inline">
