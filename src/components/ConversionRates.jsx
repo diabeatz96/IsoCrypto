@@ -2,6 +2,15 @@ import React, {useEffect, useState} from 'react';
 import Modal from "./Modal.jsx";
 import CurrencySelection from "./CurrencySelection.jsx";
 
+
+/**
+ * This component compartmentalizes all of the logic for Conversion Rates and displays them
+ * : FUTURE: SHIFT STATE OVER TO USEREDUCER
+ * @param {string} dataInfo - Passed down component of dataInfo from Coindesk API
+ * @returns {ConversionRates}
+ */
+
+
 function ConversionRates({dataInfo}) {
 
     const [showModal, setShowModal] = useState(false);
@@ -11,13 +20,22 @@ function ConversionRates({dataInfo}) {
     const [BTCUSD, setBTCUSD] = useState();
     const [BTCGBP, setBTCGBP] = useState();
     const [BTCEUR, setBTCEUR] = useState();
+    const [dollarBTCUSD, setDollarBTCUSD] = useState(1);
+    const [dollarBTCEUR, setDollarBTCEUR] = useState(1);
+    const [dollarBTCGBP, setDollarBTCGBP] = useState(1);
+    
+
+
     const [rateGroup, setRateGroup] = useState([{
         element: <CurrencySelection currencyName={"USD"} coinHandler={(e) => setCoinHandler(e, "USD")} btcType={BTCUSD}/>,
-        btcValue: BTCUSD
+        btcValue: dollarBTCUSD
     }, {
+        element: <CurrencySelection currencyName={"EUR"} coinHandler={(e) => setCoinHandler(e, "EUR")} btcType={BTCEUR}/>,
+        btcValue: dollarBTCEUR
 
     }, {
-
+        element: <CurrencySelection currencyName={"GBP"} coinHandler={(e) => setCoinHandler(e, "GBP")} btcType={BTCGBP}/>,
+        btcValue: dollarBTCGBP
     }]);
 
 
@@ -31,6 +49,13 @@ function ConversionRates({dataInfo}) {
     };
 
 
+    {/*
+        This useEffect hook updates the component state with the latest Bitcoin exchange rates from the CoinDesk API.
+        If `dataInfo` is null or undefined, the hook logs the value to the console.
+        Otherwise, the hook extracts the USD, GBP, and EUR exchange rates from the `dataInfo` object and uses them to calculate the corresponding BTC exchange rates.
+        The BTC exchange rates and their USD equivalents are then stored in the component state using the `setBTCUSD`, `setBTCGBP`, `setBTCEUR`, `setDollarBTCUSD`, `setDollarBTCEUR`, and `setDollarBTCGBP` functions.
+    */}
+
     useEffect(() => {
         if(dataInfo === null || dataInfo === undefined) {
             console.log(dataInfo)
@@ -42,6 +67,9 @@ function ConversionRates({dataInfo}) {
             setBTCUSD((USD / usdRate).toFixed(4));
             setBTCGBP((GBP / gbpRate).toFixed(4));
             setBTCEUR((EUR / eurRate).toFixed(4));
+            setDollarBTCUSD((1 / usdRate).toFixed(8));
+            setDollarBTCEUR((1 / gbpRate).toFixed(8));
+            setDollarBTCGBP((1 / gbpRate).toFixed(8));
         }
     }, [dataInfo])
 
@@ -82,10 +110,10 @@ function ConversionRates({dataInfo}) {
                 <button type="button" className="nes-btn is-warning">Coin Desk</button>
                 <button type="button" className="nes-btn is-error" onClick={handleOpenModal}>Info</button>
 
-                <select onSelect={(e) => {selectHandqler} }>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
+                <select onSelect={(e) => {selectHandler} }>
+                    <option value="0">Option 1</option>
+                    <option value="1">Option 2</option>
+                    <option value="2">Option 3</option>
                 </select>
 
                 <CurrencySelection currencyName={"USD"} coinHandler={(e) => setCoinHandler(e, "USD")} btcType={BTCUSD}/>
