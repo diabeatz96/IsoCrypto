@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Modal from "./Modal.jsx";
+import CurrencySelection from "./CurrencySelection.jsx";
 
 function ConversionRates({dataInfo}) {
 
@@ -10,7 +11,14 @@ function ConversionRates({dataInfo}) {
     const [BTCUSD, setBTCUSD] = useState();
     const [BTCGBP, setBTCGBP] = useState();
     const [BTCEUR, setBTCEUR] = useState();
-    const [rateGroup, setRateGroup] = useState([BTCUSD, BTCGBP, BTCEUR]);
+    const [rateGroup, setRateGroup] = useState([{
+        element: <CurrencySelection currencyName={"USD"} coinHandler={(e) => setCoinHandler(e, "USD")} btcType={BTCUSD}/>,
+        btcValue: BTCUSD
+    }, {
+
+    }, {
+
+    }]);
 
 
 
@@ -37,7 +45,9 @@ function ConversionRates({dataInfo}) {
         }
     }, [dataInfo])
 
-
+    const selectHandler = (e) => {
+        return <div> HIIII </div>
+    }
     const setCoinHandler = (e, cointype) => {
 
         const usdRate = dataInfo.bpi.USD.rate_float;
@@ -71,30 +81,16 @@ function ConversionRates({dataInfo}) {
                 <button type="button" className="nes-btn is-success">Refresh Rates</button>
                 <button type="button" className="nes-btn is-warning">Coin Desk</button>
                 <button type="button" className="nes-btn is-error" onClick={handleOpenModal}>Info</button>
-                <div className="nes-field is-inline">
-                    <label htmlFor="USD"> USD </label>
-                    <input defaultValue={1000} type="number" min="1" maxLength={10} onChange={(e) => setCoinHandler(e, "USD")} id="warning_field" className="nes-input is-warning" placeholder={100}/>
-                    <span className="is-warning"><i className="nes-icon coin is-small"></i></span>
-                    <span className="is-primary"> {BTCUSD}</span>
-                </div>
 
-                <div className="nes-field is-inline">
-                    <label htmlFor="EUR"> EUR </label>
-                    <input defaultValue={1000} type="number" min="1" maxLength={10}
-                           onChange={(e) => setCoinHandler(e, "EUR")} id="EUR"
-                           className="nes-input is-warning" placeholder="100"/>
-                    <span className="is-warning"><i className="nes-icon coin is-small"></i></span>
-                    <span className="is-primary"> {BTCEUR}</span>
-                </div>
+                <select onSelect={(e) => {selectHandqler} }>
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                </select>
 
-                <div className="nes-field is-inline">
-                    <label htmlFor="GBP"> GBP </label>
-                    <input defaultValue={1000} type="number" min="1" maxLength={10}
-                           onChange={(e) => setCoinHandler(e, "GBP")} id="GBP"
-                           className="nes-input is-warning" placeholder="100"/>
-                    <span className="is-warning"><i className="nes-icon coin is-small"></i></span>
-                    <span className="is-primary"> {BTCGBP}</span>
-                </div>
+                <CurrencySelection currencyName={"USD"} coinHandler={(e) => setCoinHandler(e, "USD")} btcType={BTCUSD}/>
+                <CurrencySelection currencyName={"EUR"} coinHandler={(e) => setCoinHandler(e, "EUR")} btcType={BTCEUR}/>
+                <CurrencySelection currencyName={"GBP"} coinHandler={(e) => setCoinHandler(e, "GBP")} btcType={BTCGBP}/>
 
 
 
