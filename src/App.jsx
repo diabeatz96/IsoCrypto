@@ -1,8 +1,7 @@
 import {useEffect, useState} from 'react'
-import { IsometricContainer, Isometric, IsometricPlane, IsometricGrid,IsometricCube } from 'isometric-react'
+import { IsometricContainer, Isometric, IsometricPlane, IsometricCube } from 'isometric-react'
 import "nes.css/css/nes.min.css";
 import axios from "axios";
-import ConversionRates from "./components/ConversionRates.jsx";
 import LeftDisplay from './components/LeftDisplay.jsx';
 import RightDisplay from './components/RightDisplay.jsx';
 
@@ -69,7 +68,13 @@ function App() {
 </IsometricCube>
 
 
-      <IsometricPlane color="#9E3726" width={20} height={5}  rotate={{name: "placedown", from: "0deg", to: "0deg", delay: "0", duration: "0s"}} position={{left: 10, top: 20}} children={<ConversionRates/>} />
+      <IsometricPlane color="#9E3726" width={25} height={5}  rotate={{name: "placedown", from: "0deg", to: "0deg", delay: "0", duration: "0s"}} position={{left: 25, top: 30}} children={
+          <>
+              <i style={{ scale: "500%"}} className="nes-pokeball"></i>
+          </>
+
+
+      } />
 
 
       </Isometric>

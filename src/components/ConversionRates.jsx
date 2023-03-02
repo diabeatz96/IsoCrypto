@@ -1,14 +1,26 @@
 import React, {useEffect, useState} from 'react';
+import Modal from "./Modal.jsx";
 
 function ConversionRates({dataInfo}) {
 
-    const [USD, setUSD] = useState(1);
-    const [GBP, setGBP] = useState(1);
-    const [EUR, setEUR] = useState(1);
-    const [rateGroup, setRateGroup] = useState([BTCUSD, BTCGBP, BTCEUR]);
+    const [showModal, setShowModal] = useState(false);
+    const [USD, setUSD] = useState(1000);
+    const [GBP, setGBP] = useState(1000);
+    const [EUR, setEUR] = useState(1000);
     const [BTCUSD, setBTCUSD] = useState();
     const [BTCGBP, setBTCGBP] = useState();
     const [BTCEUR, setBTCEUR] = useState();
+    const [rateGroup, setRateGroup] = useState([BTCUSD, BTCGBP, BTCEUR]);
+
+
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
 
     useEffect(() => {
@@ -52,12 +64,13 @@ function ConversionRates({dataInfo}) {
     return (
         <div>
             <div className="nes-container  is-centered">
+                <Modal open={showModal} close={handleCloseModal}/>
+
                 <p className="title">Conversion Rates</p>
                 <button type="button" className="nes-btn is-primary">Sort Rates</button>
                 <button type="button" className="nes-btn is-success">Refresh Rates</button>
                 <button type="button" className="nes-btn is-warning">Coin Desk</button>
-                <button type="button" className="nes-btn is-error">Info</button>
-
+                <button type="button" className="nes-btn is-error" onClick={handleOpenModal}>Info</button>
                 <div className="nes-field is-inline">
                     <label htmlFor="USD"> USD </label>
                     <input defaultValue={1000} type="number" min="1" maxLength={10} onChange={(e) => setCoinHandler(e, "USD")} id="warning_field" className="nes-input is-warning" placeholder={100}/>
