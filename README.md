@@ -5,9 +5,9 @@
 
 > A 3D look into popular crypto conversions
 
-### 🏠 [Homepage](iso-crypto.vercel.app)
+### 🏠 [Homepage](https://iso-crypto.vercel.app)
 
-### ✨ [Demo](iso-crypto.vercel.app)
+### ✨ [Demo](https://iso-crypto.vercel.app)
 
 ## Install
 
