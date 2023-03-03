@@ -21,6 +21,8 @@ function ConversionRates({ dataInfo }) {
   const [dollarBTCEUR, setDollarBTCEUR] = useState(1);
   const [dollarBTCGBP, setDollarBTCGBP] = useState(1);
   const [timeLeft, setTimeLeft] = useState(300);
+  const [showOptions, setShowOptions] = useState([true, false, false]);
+
   const [rateGroup, setRateGroup] = useState([
     {
       element: (
@@ -129,32 +131,29 @@ function ConversionRates({ dataInfo }) {
     }
   }, [dataInfo]);
 
-    {/**
+  {
+    /**
         ASYNC HANDLER: 
-        UTILIZIE COMPONENT ADAM. 
+        UTILIZIE COMPONENT. 
         JOB SECURITY FOR A PROGRAMMER. 
 
-    */}
+    */
+  }
   const setCoinHandler = (e, cointype) => {
     const usdRate = dataInfo.bpi.USD.rate_float;
     const gbpRate = dataInfo.bpi.GBP.rate_float;
     const eurRate = dataInfo.bpi.EUR.rate_float;
     console.log("Value at coin Handler" + e.target.value);
+    const typedValue = parseFloat(e.target.value);
     switch (cointype) {
       case "USD":
-        debugger;
-        setUSD(parseFloat(e.target.value));
-        console.log(parseFloat(e.target.value));
-        setBTCUSD((USD / usdRate).toFixed(4));
-        console.log(BTCUSD);
+        setBTCUSD((typedValue / usdRate).toFixed(4));
         break;
       case "EUR":
-        setEUR(parseFloat(e.target.value));
-        setBTCEUR((EUR / eurRate).toFixed(4));
+        setBTCEUR((typedValue / eurRate).toFixed(4));
         break;
       case "GBP":
-        setGBP(parseFloat(e.target.value));
-        setBTCGBP((GBP / gbpRate).toFixed(4));
+        setBTCGBP((typedValue / gbpRate).toFixed(4));
         break;
       default:
         e.target.value = "Does not exist";
@@ -164,31 +163,13 @@ function ConversionRates({ dataInfo }) {
     console.log(e.target.value);
     switch (e.target.value) {
       case "USD":
-        setSelectedItem(
-          <CurrencySelection
-            currencyName={"USD"}
-            coinHandler={(e) => setCoinHandler(e, "USD")}
-            btcType={BTCUSD}
-          />
-        );
+        setShowOptions([true, false, false]);
         break;
       case "EUR":
-        setSelectedItem(
-          <CurrencySelection
-            currencyName={"EUR"}
-            coinHandler={(e) => setCoinHandler(e, "EUR")}
-            btcType={BTCEUR}
-          />
-        );
+        setShowOptions([false, true, false]);
         break;
       case "GBP":
-        setSelectedItem(
-          <CurrencySelection
-            currencyName={"GBP"}
-            coinHandler={(e) => setCoinHandler(e, "GBP")}
-            btcType={BTCGBP}
-          />
-        );
+        setShowOptions([false, false, true]);
         break;
       default:
         break;
@@ -230,7 +211,30 @@ function ConversionRates({ dataInfo }) {
             <option value="GBP"> GBP </option>
           </select>
 
-          {selectedItem}
+          {showOptions[0] && (
+            <CurrencySelection
+              currencyName={"USD"}
+              coinHandler={(e) => setCoinHandler(e, "USD")}
+              btcType={BTCUSD}
+            />
+          )}
+
+          {showOptions[1] && (
+            <CurrencySelection
+              currencyName={"EUR"}
+              coinHandler={(e) => setCoinHandler(e, "EUR")}
+              btcType={BTCEUR}
+            />
+          )}
+
+          {showOptions[2] && (
+            <CurrencySelection
+              currencyName={"GBP"}
+              coinHandler={(e) => setCoinHandler(e, "GBP")}
+              btcType={BTCGBP}
+            />
+          )}
+
         </div>
       </div>
     </div>
