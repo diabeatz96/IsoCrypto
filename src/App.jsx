@@ -34,7 +34,6 @@ function App() {
     <div>
       <h1 style={{ textAlign: "center", color: "white", paddingRight: "80px" }}>
         {" "}
-        {JSON.stringify(currentCoinData, 0, 1)}
         Welcome to the Crypto Hut{" "}
       </h1>
       <IsometricContainer>
