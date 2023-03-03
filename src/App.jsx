@@ -33,9 +33,8 @@ function App() {
   return (
     <div>
       <h1 style={{ textAlign: "center", color: "white", paddingRight: "80px" }}>
-        <pre>
-           {JSON.stringify(currentCoinData, 0, 1)}
-        </pre>
+        {" "}
+        {JSON.stringify(currentCoinData, 0, 1)}
         Welcome to the Crypto Hut{" "}
       </h1>
       <IsometricContainer>
