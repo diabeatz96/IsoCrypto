@@ -28,7 +28,7 @@ function App() {
       console.log(coinData, 1);
       coinData();
   
-  }, [currentCoinData]);
+  }, []);
 
   return (
     <div>
