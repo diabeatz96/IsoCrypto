@@ -129,6 +129,12 @@ function ConversionRates({ dataInfo }) {
     }
   }, [dataInfo]);
 
+    {/**
+        ASYNC HANDLER: 
+        UTILIZIE COMPONENT ADAM. 
+        JOB SECURITY FOR A PROGRAMMER. 
+
+    */}
   const setCoinHandler = (e, cointype) => {
     const usdRate = dataInfo.bpi.USD.rate_float;
     const gbpRate = dataInfo.bpi.GBP.rate_float;

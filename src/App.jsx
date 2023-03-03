@@ -13,22 +13,23 @@ import RightDisplay from "./components/RightDisplay.jsx";
 function App() {
   const [currentCoinData, setCurrentCoinData] = useState(null);
 
-  useEffect(() => {
-    return () => {
-      const coinData = async () => {
-        if (currentCoinData === null) {
-          try {
-            const response = await axios.get(
-              "https://api.coindesk.com/v1/bpi/currentprice.json"
-            );
-            setCurrentCoinData(response.data);
-          } catch (e) {
-            return e.error;
-          }
-        }
-      };
+  const coinData = async () => {
+    if (currentCoinData === null) {
+      try {
+        const response = await axios.get(
+          "https://api.coindesk.com/v1/bpi/currentprice.json"
+        );
+        setCurrentCoinData(response.data);
+      } catch (e) {
+        return e.error;
+      }
+    }
+  };
+
+  useEffect(() => {    
+      console.log(coinData, 1);
       coinData();
-    };
+  
   }, [currentCoinData]);
 
   return (
