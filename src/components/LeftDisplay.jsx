@@ -6,15 +6,18 @@ function LeftDisplay({ coinData }) {
 
 
   const createTime = () => {
+    if (!coinData) {
+      console.log(coinData);
+    } else {
       console.log(coinData);
       const utcTime = coinData.time.updated;
       const date = new Date(utcTime);
       setCurrentTime(date.toLocaleString());
+    }
   }
   useEffect(() => {
       createTime();
-  }, []);
-
+  }, [coinData]);
 
   return (
     <div>
