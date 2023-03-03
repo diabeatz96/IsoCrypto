@@ -14,7 +14,6 @@ function App() {
   const [currentCoinData, setCurrentCoinData] = useState(null);
 
   const coinData = async () => {
-    if (currentCoinData === null) {
       try {
         const response = await axios.get(
           "https://api.coindesk.com/v1/bpi/currentprice.json"
@@ -23,7 +22,6 @@ function App() {
       } catch (e) {
         return e.error;
       }
-    }
   };
 
   useEffect(() => {    
