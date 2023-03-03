@@ -19,6 +19,7 @@ function App() {
           "https://api.coindesk.com/v1/bpi/currentprice.json"
         );
         setCurrentCoinData(response.data);
+        console.log(response.data, 2);
       } catch (e) {
         return e.error;
       }
@@ -27,7 +28,6 @@ function App() {
   useEffect(() => {    
       console.log(coinData, 1);
       coinData();
-  
   }, []);
 
   return (
