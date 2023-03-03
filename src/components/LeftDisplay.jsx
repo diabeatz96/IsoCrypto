@@ -4,19 +4,17 @@ import ConversionRates from "./ConversionRates.jsx";
 function LeftDisplay({ coinData }) {
   const [currentTime, setCurrentTime] = useState("");
 
-  useEffect(() => {
-    return () => {
-      if (!coinData) {
-        console.log(coinData);
-      } else {
-        console.log(coinData);
 
-        const utcTime = coinData.time.updated;
-        const date = new Date(utcTime);
-        setCurrentTime(date.toLocaleString());
-      }
-    };
-  }, [coinData]);
+  const createTime = () => {
+      console.log(coinData);
+      const utcTime = coinData.time.updated;
+      const date = new Date(utcTime);
+      setCurrentTime(date.toLocaleString());
+  }
+  useEffect(() => {
+      createTime();
+  }, []);
+
 
   return (
     <div>
