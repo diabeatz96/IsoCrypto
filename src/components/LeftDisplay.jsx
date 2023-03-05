@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ConversionRates from "./ConversionRates.jsx";
 
 function LeftDisplay({ coinData }) {
   const [currentTime, setCurrentTime] = useState("");
@@ -44,9 +43,9 @@ function LeftDisplay({ coinData }) {
           {" "}
           {currentTime}{" "}
         </h1>
-        <i className="nes-icon instagram is-large"> </i>
-        <i className="nes-icon github is-large"> </i>
-        <i className="nes-icon linkedin is-large"> </i>
+        <i onClick={()=> window.open("https://www.instagram.com/diabeatz96/?hl=en", "_blank")} className="nes-icon instagram is-large nes-pointer"> </i>
+        <i onClick={()=> window.open("https://github.com/diabeatz96", "_blank")} className="nes-icon github is-large nes-pointer"> </i>
+        <i onClick={()=> window.open("https://www.linkedin.com/in/adamkostandy/", "_blank")} className="nes-icon linkedin is-large nes-pointer"> </i>
       </section>
     </div>
   );
