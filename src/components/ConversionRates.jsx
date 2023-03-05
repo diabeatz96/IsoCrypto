@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "./Modal.jsx";
 import CurrencySelection from "./CurrencySelection.jsx";
+import WarningModal from "./WarningModal.jsx";
 
 /**
  * This component compartmentalizes all of the logic for Conversion Rates and displays them
@@ -11,6 +12,7 @@ import CurrencySelection from "./CurrencySelection.jsx";
 
 function ConversionRates({ dataInfo }) {
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
   const [USD, setUSD] = useState(1000);
   const [GBP, setGBP] = useState(1000);
   const [EUR, setEUR] = useState(1000);
@@ -20,14 +22,7 @@ function ConversionRates({ dataInfo }) {
   const [timeLeft, setTimeLeft] = useState(300);
   const [showOptions, setShowOptions] = useState([true, false, false]);
   const [rateGroup, setRateGroup] = useState([]);
-
-  const [selectedItem, setSelectedItem] = useState(
-    <CurrencySelection
-      currencyName={"USD"}
-      coinHandler={(e) => setCoinHandler(e, "USD")}
-      btcType={BTCUSD}
-    />
-  );
+  const [isAscending, setIsAscending] = useState(true);
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -35,6 +30,23 @@ function ConversionRates({ dataInfo }) {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleOpenModal2 = () => {
+    if(timeLeft <= 0) {
+      const usdRate = dataInfo.bpi.USD.rate_float;
+      const gbpRate = dataInfo.bpi.GBP.rate_float;
+      const eurRate = dataInfo.bpi.EUR.rate_float;
+
+      localStorage.setItem("USA", usdRate);
+      localStorage.setItem("GBP", gbpRate);
+      localStorage.setItem("EUR", eurRate);
+    }
+    setShowModal2(true);
+  };
+
+  const handleCloseModal2 = () => {
+    setShowModal2(false);
   };
 
   useEffect(() => {
@@ -47,15 +59,21 @@ function ConversionRates({ dataInfo }) {
 
       if (expirationTime === "0") {
         clearInterval(intervalId);
-        localStorage.removeItem(expirationTime);
+        localStorage.removeItem("expirationTime");
         return;
       }
-      setTimeLeft(parseInt(expirationTime) - 1);
-      localStorage.setItem("expirationTime", parseInt(expirationTime) - 1);
+
+      if(localStorage.getItem("expirationTime") === "NaN") {
+           localStorage.setItem("expirationTime", timeLeft.toString());
+           setTimeLeft(localStorage.getItem("expirationTime"));
+      } else {
+        setTimeLeft(parseInt(expirationTime) - 1);
+        localStorage.setItem("expirationTime", parseInt(expirationTime) - 1);
+      }
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timeLeft]);
+  }, []);
 
   {
     /*
@@ -104,7 +122,7 @@ function ConversionRates({ dataInfo }) {
         name: "EUR €",
         value: dollarBTCEUR
       }, {
-        name: "GBP (£)",
+        name: "GBP £",
         value: dollarBTCGBP
       }]);
 
@@ -122,12 +140,21 @@ function ConversionRates({ dataInfo }) {
 
   const sortRates = () => {
 
+    if(isAscending) {
+      const sortedRated = rateGroup.sort((a, b) => {return a.value - b.value})
+      setRateGroup([...sortedRated]);
+      setIsAscending(false);
+    } else {
+      const sortedRated = rateGroup.sort((a, b) => {return b.value - a.value})
+      setRateGroup([...sortedRated]);
+      setIsAscending(true);
+    }
   }
+
   const setCoinHandler = (e, cointype) => {
     const usdRate = dataInfo.bpi.USD.rate_float;
     const gbpRate = dataInfo.bpi.GBP.rate_float;
     const eurRate = dataInfo.bpi.EUR.rate_float;
-    console.log("Value at coin Handler" + e.target.value);
     const typedValue = parseFloat(e.target.value);
     switch (cointype) {
       case "USD":
@@ -144,7 +171,6 @@ function ConversionRates({ dataInfo }) {
     }
   };
   const selectHandler = (e) => {
-    console.log(e.target.value);
     switch (e.target.value) {
       case "USD":
         setShowOptions([true, false, false]);
@@ -164,12 +190,13 @@ function ConversionRates({ dataInfo }) {
     <div>
       <div className="  is-centered">
         <Modal open={showModal} close={handleCloseModal} />
+        <WarningModal open={showModal2} close={handleCloseModal2} remainingTime={timeLeft} />
 
         <p className="title">Conversion Rates</p>
-        <button type="button" className="nes-btn is-primary">
+        <button onClick={sortRates} type="button" className="nes-btn is-primary">
           Sort Rates
         </button>
-        <button type="button" className="nes-btn is-success">
+        <button onClick={handleOpenModal2} type="button" className="nes-btn is-success">
           Refresh Rates
         </button>
         <button type="button" onClick={()=> window.open("https://www.coindesk.com/", "_blank")} className="nes-btn is-warning">
@@ -188,7 +215,7 @@ function ConversionRates({ dataInfo }) {
             </thead>
             <tbody>
             {rateGroup.map((item) => {
-              return <tr>
+              return <tr key={item.name}>
                 <td> {item.name}: 1</td>
                 <td> ₿ {item.value}  </td>
               </tr>

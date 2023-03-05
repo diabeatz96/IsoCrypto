@@ -53,6 +53,12 @@ function App() {
             color="#9E3726"
             width={75}
             height={75}
+            shadow={{
+                distance: 5,
+                spacingX: 1,
+                spacingY: -1,
+            }}
+            className="opacity"
             position={{ elevation: 50, left: -20, top: -10 }}
             rotate={{ name: "Billboard", from: "0deg", to: "90deg" }}
             children={
