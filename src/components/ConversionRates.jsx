@@ -17,44 +17,10 @@ function ConversionRates({ dataInfo }) {
   const [BTCUSD, setBTCUSD] = useState();
   const [BTCGBP, setBTCGBP] = useState();
   const [BTCEUR, setBTCEUR] = useState();
-  const [dollarBTCUSD, setDollarBTCUSD] = useState(1);
-  const [dollarBTCEUR, setDollarBTCEUR] = useState(1);
-  const [dollarBTCGBP, setDollarBTCGBP] = useState(1);
   const [timeLeft, setTimeLeft] = useState(300);
   const [showOptions, setShowOptions] = useState([true, false, false]);
+  const [rateGroup, setRateGroup] = useState([]);
 
-  const [rateGroup, setRateGroup] = useState([
-    {
-      element: (
-        <CurrencySelection
-          currencyName={"USD"}
-          coinHandler={(e) => setCoinHandler(e, "USD")}
-          btcType={BTCUSD}
-        />
-      ),
-      btcValue: dollarBTCUSD,
-    },
-    {
-      element: (
-        <CurrencySelection
-          currencyName={"EUR"}
-          coinHandler={(e) => setCoinHandler(e, "EUR")}
-          btcType={BTCEUR}
-        />
-      ),
-      btcValue: dollarBTCEUR,
-    },
-    {
-      element: (
-        <CurrencySelection
-          currencyName={"GBP"}
-          coinHandler={(e) => setCoinHandler(e, "GBP")}
-          btcType={BTCGBP}
-        />
-      ),
-      btcValue: dollarBTCGBP,
-    },
-  ]);
   const [selectedItem, setSelectedItem] = useState(
     <CurrencySelection
       currencyName={"USD"}
@@ -119,25 +85,43 @@ function ConversionRates({ dataInfo }) {
         localStorage.setItem("EUR", eurRate);
       }
       console.log("TRIGGERED");
-      const usdRate = localStorage.getItem("GBP");
+      const usdRate = localStorage.getItem("USA");
       const gbpRate = localStorage.getItem("EUR");
       const eurRate = localStorage.getItem("GBP");
+
       setBTCUSD((USD / usdRate).toFixed(4));
       setBTCGBP((GBP / gbpRate).toFixed(4));
       setBTCEUR((EUR / eurRate).toFixed(4));
-      setDollarBTCUSD((1 / usdRate).toFixed(8));
-      setDollarBTCEUR((1 / gbpRate).toFixed(8));
-      setDollarBTCGBP((1 / gbpRate).toFixed(8));
+
+      const dollarBTCUSD = (1 / usdRate).toFixed(8)
+      const dollarBTCGBP = (1 / gbpRate).toFixed(8)
+      const dollarBTCEUR = (1 / eurRate).toFixed(8)
+
+      setRateGroup([{
+        name: "USD $",
+        value: dollarBTCUSD
+      }, {
+        name: "EUR €",
+        value: dollarBTCEUR
+      }, {
+        name: "GBP (£)",
+        value: dollarBTCGBP
+      }]);
+
     }
   }, [dataInfo]);
 
   {
     /**
-        ASYNC HANDLER: 
-        UTILIZIE COMPONENT. 
-        JOB SECURITY FOR A PROGRAMMER. 
+        ASYNC HANDLER:
+        UTILIZIE COMPONENT.
+        JOB SECURITY FOR A PROGRAMMER.
 
     */
+  }
+
+  const sortRates = () => {
+
   }
   const setCoinHandler = (e, cointype) => {
     const usdRate = dataInfo.bpi.USD.rate_float;
@@ -178,7 +162,7 @@ function ConversionRates({ dataInfo }) {
 
   return (
     <div>
-      <div className="nes-container  is-centered">
+      <div className="  is-centered">
         <Modal open={showModal} close={handleCloseModal} />
 
         <p className="title">Conversion Rates</p>
@@ -188,7 +172,7 @@ function ConversionRates({ dataInfo }) {
         <button type="button" className="nes-btn is-success">
           Refresh Rates
         </button>
-        <button type="button" className="nes-btn is-warning">
+        <button type="button" onClick={()=> window.open("https://www.coindesk.com/", "_blank")} className="nes-btn is-warning">
           Coin Desk
         </button>
         <button
@@ -198,6 +182,20 @@ function ConversionRates({ dataInfo }) {
         >
           Info
         </button>
+        <div className="nes-table-responsive">
+          <table className="nes-table is-bordered is-centered">
+            <thead>
+            </thead>
+            <tbody>
+            {rateGroup.map((item) => {
+              return <tr>
+                <td> {item.name}: 1</td>
+                <td> ₿ {item.value}  </td>
+              </tr>
+            })}
+            </tbody>
+          </table>
+        </div>
 
         <div>
           <label htmlFor="options">Select an option:</label>

@@ -25,17 +25,27 @@ function App() {
       }
   };
 
-  useEffect(() => {    
+  useEffect(() => {
       console.log(coinData, 1);
       coinData();
   }, []);
 
   return (
     <div>
-      <h1 style={{ textAlign: "center", color: "white", paddingRight: "80px" }}>
-        {" "}
-        Welcome to the Crypto Hut{" "}
-      </h1>
+        <ul className="background">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+
+
       <IsometricContainer>
         <Isometric>
           <IsometricPlane
