@@ -1,15 +1,17 @@
-import { IsometricPlane } from "isometric-react";
+/* eslint-disable react/no-children-prop */
+import { IsometricPlane } from 'isometric-react'
 
 const Modal = ({ open, close, children }) => {
   const handleClose = () => {
-    close();
-  };
+    close()
+  }
 
-  return open ? (
+  return open
+    ? (
     <IsometricPlane
       className="flipThis"
       width={20}
-      color={"white"}
+      color={'white'}
       height={20}
       position={{ top: -20, left: 0, elevation: -40 }}
       children={<div> Hello </div>}
@@ -25,7 +27,8 @@ const Modal = ({ open, close, children }) => {
         </button>
       </div>
     </IsometricPlane>
-  ) : null;
-};
+      )
+    : null
+}
 
-export default Modal;
+export default Modal

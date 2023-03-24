@@ -1,11 +1,6 @@
-import React, { useState } from "react";
+import React from 'react'
 
-function CurrencySelection({ currencyName, coinHandler, btcType }) {
-
-    const handleCoinChange = (event) => {
-        coinHandler(event.target.value, currencyName);
-      };
-
+function CurrencySelection ({ currencyName, coinHandler, btcType }) {
   return (
     <div>
       <div className="nes-field is-inline">
@@ -26,7 +21,7 @@ function CurrencySelection({ currencyName, coinHandler, btcType }) {
         <span className="is-primary"> {btcType}</span>
       </div>
     </div>
-  );
+  )
 }
 
-export default CurrencySelection;
+export default CurrencySelection

@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
-function SelectionBar(props) {
-  return <div></div>;
+function SelectionBar (props) {
+  return <div></div>
 }
 
-export default SelectionBar;
+export default SelectionBar
